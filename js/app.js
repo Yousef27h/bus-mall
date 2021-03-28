@@ -95,12 +95,12 @@ function clickFun(event){
     }
   }
   // console.table(Stuff.all);
-  if (counter >= 5){
+  if (counter >= 25){
     imagesSection.removeEventListener('click', clickFun);
   }
   counter++ ;
   console.log(counter);
-  if (counter <= 5){
+  if (counter <= 25){
     render();
   }
 }
