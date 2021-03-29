@@ -72,10 +72,10 @@ function render(){
     midIndex = random(0,imgNames.length-1);
     rightIndex = random(0,imgNames.length-1);
   }
-  // console.log(imgpaths);
-  // console.log(leftIndex);
-  // console.log(midIndex);
-  // console.log(rightIndex);
+  console.log(imgpaths);
+  console.log(leftIndex);
+  console.log(midIndex);
+  console.log(rightIndex);
 
   leftImg.src = Stuff.all[leftIndex].path;
   leftImg.alt = Stuff.all[leftIndex].name;
