@@ -1,6 +1,7 @@
 'use strict';
 
 // Products names
+
 const imgNames = [
   'bag',
   'banana',
@@ -25,6 +26,7 @@ const imgNames = [
 ];
 
 // Creating a constructor
+
 function Stuff(name){
   this.name = name;
   this.path = `./img/${name}.jpg`;
@@ -35,6 +37,7 @@ function Stuff(name){
 Stuff.all = [];
 
 // Creating objects using imgNames array
+
 for (let i=0; i<imgNames.length; i++){
   new Stuff(imgNames[i]);
 }
@@ -42,12 +45,14 @@ console.log(Stuff.all);
 
 
 // Creating random number
+
 function random(min, max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
 // render random images
+
 // First we create constants to attach image ids
 const leftImg = document.getElementById('leftImg');
 const midImg = document.getElementById('midImg');
@@ -86,17 +91,17 @@ imagesSection.addEventListener('click', clickFun);
 // defining click function
 function clickFun(event){
   if (event.target.id !== 'imgColumn'){
-    if (event.target.id === leftImg.id){
-      Stuff.all[leftIndex].vote++;
-    }else if(event.target.id === rightImg.id){
-      Stuff.all[rightIndex].vote++;
+    if (counter > 25){
+      imagesSection.removeEventListener('click', clickFun);
     }else{
-      Stuff.all[midIndex].vote++;
+      if (event.target.id === leftImg.id){
+        Stuff.all[leftIndex].vote++;
+      }else if(event.target.id === rightImg.id){
+        Stuff.all[rightIndex].vote++;
+      }else{
+        Stuff.all[midIndex].vote++;
+      }
     }
-  }
-  // console.table(Stuff.all);
-  if (counter >= 25){
-    imagesSection.removeEventListener('click', clickFun);
   }
   counter++ ;
   console.log(counter);
@@ -108,17 +113,11 @@ render();
 
 
 // Creating Results Section
+
 let resultBtn = document.getElementById('myBtn');
 resultBtn.addEventListener('click', resultsFun);
 function resultsFun(){
   let resultsSection = document.getElementById('leftColumn');
-  // let uList = document.createElement('ul');
-  // resultsSection.appendChild(uList);
-//   <tr>
-//   <th>Image</th>
-//   <th>votes</th>
-//   <th>shows</th>
-// </tr>
   let tableEl = document.getElementById('myTable');
   let thrEl = document.createElement('tr');
   tableEl.appendChild(thrEl);
@@ -143,9 +142,6 @@ function resultsFun(){
     let tdEl2 = document.createElement('td');
     trEl.appendChild(tdEl2);
     tdEl2.textContent = Stuff.all[i].show;
-    // let iList = document.createElement('li');
-    // uList.appendChild(iList);
-    // iList.textContent=`image${i+1}: ${Stuff.all[i].vote} votes`;
   }
   document.getElementById('myBtn').disabled = true;
 }
