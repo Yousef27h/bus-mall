@@ -75,7 +75,7 @@ button{
 }
 footer{
     clear: both;
-    padding: 3%;
+    
     text-align: center;
     background-color: #eae2b7;
     border-radius: 2%;
@@ -95,4 +95,7 @@ footer{
 th{
     padding-left: 4%;
     padding-right: 4%;
+}
+.chartjs-render-monitor {
+    animation: chartjs-render-animation 5ms;
 }
