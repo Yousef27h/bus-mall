@@ -1,5 +1,7 @@
 'use strict';
 
+let votes = [];
+let shows = [];
 // Products names
 
 const imgNames = [
@@ -57,17 +59,24 @@ function random(min, max){
 const leftImg = document.getElementById('leftImg');
 const midImg = document.getElementById('midImg');
 const rightImg = document.getElementById('rightImg');
+// Variable to store random images so they dont appear on next round
+let imgpaths = [0,0,0];
 // Then we create function that render images on our web page
 let leftIndex, midIndex, rightIndex;
 function render(){
   leftIndex = random(0,imgNames.length-1);
   midIndex = random(0,imgNames.length-1);
   rightIndex = random(0,imgNames.length-1);
-  while (leftIndex === midIndex || leftIndex === rightIndex || midIndex === rightIndex){
+  while (leftIndex === midIndex || leftIndex === rightIndex || midIndex === rightIndex || leftIndex === imgpaths[0] || midIndex === imgpaths[0] || rightIndex === imgpaths[0] || leftIndex === imgpaths[1] || midIndex === imgpaths[1] || rightIndex === imgpaths[1] || leftIndex === imgpaths[2] || midIndex === imgpaths[2] || rightIndex === imgpaths[2] ){
     leftIndex = random(0,imgNames.length-1);
     midIndex = random(0,imgNames.length-1);
     rightIndex = random(0,imgNames.length-1);
   }
+  // console.log(imgpaths);
+  // console.log(leftIndex);
+  // console.log(midIndex);
+  // console.log(rightIndex);
+
   leftImg.src = Stuff.all[leftIndex].path;
   leftImg.alt = Stuff.all[leftIndex].name;
   leftImg.title = Stuff.all[leftIndex].name;
@@ -82,6 +91,10 @@ function render(){
   rightImg.alt = Stuff.all[rightIndex].name;
   rightImg.title = Stuff.all[rightIndex].name;
   Stuff.all[rightIndex].show++;
+
+  imgpaths[0] = leftIndex;
+  imgpaths[1] = midIndex;
+  imgpaths[2] = rightIndex;
 }
 
 let counter=1;
@@ -92,7 +105,12 @@ imagesSection.addEventListener('click', clickFun);
 function clickFun(event){
   if (event.target.id !== 'imgColumn'){
     if (counter > 25){
+      for (let i=0; i<Stuff.all.length ; i++){
+        votes.push(Stuff.all[i].vote);
+        shows.push(Stuff.all[i].show);
+      }
       imagesSection.removeEventListener('click', clickFun);
+      chartRender();
     }else{
       if (event.target.id === leftImg.id){
         Stuff.all[leftIndex].vote++;
@@ -144,4 +162,41 @@ function resultsFun(){
     tdEl2.textContent = Stuff.all[i].show;
   }
   document.getElementById('myBtn').disabled = true;
+}
+
+function chartRender() {
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: imgNames,
+      datasets: [{
+        label: 'Img votes',
+        backgroundColor: '#d00000',
+        borderColor: '#eae2b7',
+        data: votes,
+        hoverBackgroundColor: '#dc2f02'
+      },
+      {
+        label: 'Img shows',
+        backgroundColor: '#f48c06',
+        borderColor: '#eae2b7',
+        data: shows,
+        hoverBackgroundColor: '#ffba08'
+      }]
+    },
+
+    // Configuration options go here
+    options: {
+      legend: {
+        labels: {
+          // This more specific font property overrides the global property
+          fontColor: 'black'
+        }
+      }
+    }
+  });
 }
