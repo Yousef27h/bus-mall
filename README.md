@@ -8,6 +8,8 @@ This repository contains my BusMall project work during code201 course, To make 
 The app’s purpose is to have the group members choose which product, of the three displayed images, that they would be most likely to purchase, and then store, calculate, and visually display the resulting data.
 
 
-In this repository I mainly used HTML, CSS, and JavaScript to complete my project. 
+In this repository I mainly used HTML, CSS, and JavaScript to complete my project.   
+
+[Live Page]( https://yousef27h.github.io/bus-mall/)  
 
 **MIT ©** Yousef Salem
