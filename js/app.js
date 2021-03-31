@@ -94,9 +94,26 @@ function render(){
 
   imgpaths[0] = leftIndex;
   imgpaths[1] = midIndex;
-  imgpaths[2] = rightIndex;
+  imgpaths[2] = rightIndex;  
+  console.log(votes);
 }
 
+// Creating function to get items from Votes local storage
+function getItem(){
+  let stringObject = localStorage.getItem('Votes');
+  let normalObject = JSON.parse(stringObject);
+  if (normalObject !== null) {
+
+    Stuff.all = normalObject;
+  }
+}
+
+// pushing values of vote & show properties inside votes & shows arrays
+for (let i=0; i<Stuff.all.length ; i++){
+  votes.push(Stuff.all[i].vote);
+  shows.push(Stuff.all[i].show);
+}
+// Creating counter for number of clicks
 let counter=1;
 // Creating action when click on images
 let imagesSection = document.getElementById('imgColumn');
@@ -105,10 +122,6 @@ imagesSection.addEventListener('click', clickFun);
 function clickFun(event){
   if (event.target.id !== 'imgColumn'){
     if (counter > 25){
-      for (let i=0; i<Stuff.all.length ; i++){
-        votes.push(Stuff.all[i].vote);
-        shows.push(Stuff.all[i].show);
-      }
       imagesSection.removeEventListener('click', clickFun);
       chartRender();
     }else{
@@ -121,21 +134,27 @@ function clickFun(event){
       }
     }
   }
+  // Updating votes & shows arrays
+  for (let i=0; i<Stuff.all.length ; i++){
+    votes[i] = Stuff.all[i].vote;
+    shows[i] = Stuff.all[i].show;
+  }
+  // Setting value for local storage of votes
+  // Updating number of clicks
   counter++ ;
-  console.log(counter);
   if (counter <= 25){
     render();
   }
+  localStorage.setItem('Votes',JSON.stringify(Stuff.all));
 }
 render();
-
 
 // Creating Results Section
 
 let resultBtn = document.getElementById('myBtn');
 resultBtn.addEventListener('click', resultsFun);
 function resultsFun(){
-  let resultsSection = document.getElementById('leftColumn');
+  // let resultsSection = document.getElementById('leftColumn');
   let tableEl = document.getElementById('myTable');
   let thrEl = document.createElement('tr');
   tableEl.appendChild(thrEl);
@@ -200,3 +219,5 @@ function chartRender() {
     }
   });
 }
+
+getItem();
